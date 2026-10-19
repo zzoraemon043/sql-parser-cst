@@ -205,8 +205,10 @@ describe("insert into", () => {
       });
 
       // Issue #124
-      it("supports ON CONFLICT together with SELECT .. JOIN", () => {
-        testWc("INSERT INTO tbl SELECT * FROM foo CROSS JOIN bar ON CONFLICT DO NOTHING");
+      dialect(["postgresql", "plpgsql"], () => {
+        it("supports ON CONFLICT together with SELECT .. JOIN", () => {
+          testWc("INSERT INTO tbl SELECT * FROM foo CROSS JOIN bar ON CONFLICT DO NOTHING");
+        });
       });
     });
   });

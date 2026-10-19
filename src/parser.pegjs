@@ -696,7 +696,7 @@ join_expr_right
       right: read(right),
     });
   }
-  / c1:__ op:(natural_join / cross_join) right:(__ alias$table_factor) {
+  / c1:__ op:(natural_join / !sqlite kw:cross_join { return kw; }) right:(__ alias$table_factor) {
     return (left: any) => ({
       type: "join_expr",
       left: trailing(left, c1),
@@ -834,6 +834,7 @@ partitioned_table
 
 join_op
   = &mysql kw:STRAIGHT_JOIN { return kw; }
+  / &sqlite kw:cross_join { return kw; }
   / join_type
 
 natural_join

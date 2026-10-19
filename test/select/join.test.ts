@@ -74,6 +74,11 @@ describe("join", () => {
   });
 
   dialect("sqlite", () => {
+    it("supports CROSS JOIN with ON / USING", () => {
+      testWc("SELECT c FROM t1 CROSS JOIN t2 ON t1.x = t2.x");
+      testWc("SELECT c FROM t1 CROSS JOIN t2 USING (x)");
+    });
+
     it("supports NATURAL FULL [OUTER] JOIN", () => {
       testWc("SELECT c FROM t1 NATURAL FULL JOIN t2");
       testWc("SELECT c FROM t1 NATURAL FULL OUTER JOIN t2");
